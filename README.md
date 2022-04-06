@@ -10,3 +10,4 @@ flutter pub run flutter_launcher_icons:main
 
 Update Splash Screen
 flutter pub run flutter_native_splash:create
+![Screenshot_1649272625](https://user-images.githubusercontent.com/29946037/162051848-1bf7e039-baad-4278-8020-a96897673252.png)
