@@ -129,7 +129,11 @@ class _MyHomePageState extends State<MyHomePage>
                                 onTap: () async {
                                   if (i == 0) {
                                     String codeSanner =
-                                        (await BarcodeScanner.scan())
+                                        (await BarcodeScanner.scan(options: new ScanOptions(strings: const {
+                                          "cancel": "Отмена",
+                                          "flash_on": "Вспышка вкл.",
+                                          "flash_off": "Вспышка выкл.",
+                                        })))
                                             as String; //barcode scnner
                                     // setState(() {
                                     //   qrCodeResult = codeSanner;
