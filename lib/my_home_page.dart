@@ -3,9 +3,9 @@ import 'dart:convert';
 //import 'package:gamestick/detail_audio_page.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
-import 'file:///Users/marker/AndroidStudioProjects/museum/lib/app_colors.dart'
-    as AppColors;
+
 import 'package:flutter/material.dart';
+import 'package:gamestick/generate.dart';
 import 'package:gamestick/scan.dart';
 
 //import 'my_tabs.dart';
@@ -49,6 +49,31 @@ class _MyHomePageState extends State<MyHomePage>
     ReadData();
   }
 
+  void openBottomModal(int i) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.qr_code_scanner),
+                title: Text('Поделиться'),
+                onTap: () async {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) =>  GeneratePageState(popularBooks[i]["game"])));
+                },
+              ),
+              // ListTile(
+              //   leading: Icon(Icons.copy),
+              //   title: Text('Open'),
+              // ),
+
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -68,14 +93,14 @@ class _MyHomePageState extends State<MyHomePage>
               // height: 100,
               // width: 300,
               //color: Colors.green,
-              child: Center(child: const Text("GAMESTICK",  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: "Avenir"))
-
-              ),
+              child: Center(
+                  child: const Text("GAMESTICK",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: "Avenir"))),
             ),
             SizedBox(
               height: 20,
@@ -95,44 +120,49 @@ class _MyHomePageState extends State<MyHomePage>
                                 popularBooks == null ? 0 : popularBooks.length,
                             itemBuilder: (_, i) {
                               return GestureDetector(
-                                onTap:()  async {
-                                  if (i==0) {
-                                    String codeSanner = (await BarcodeScanner
-                                        .scan()) as String; //barcode scnner
+                                onLongPress:() async {
+                                  if (i!=0) {
+                                    openBottomModal(i);
+                                  }
+
+                              },
+                                onTap: () async {
+                                  if (i == 0) {
+                                    String codeSanner =
+                                        (await BarcodeScanner.scan())
+                                            as String; //barcode scnner
                                     // setState(() {
                                     //   qrCodeResult = codeSanner;
                                     // });
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            ScanPage(codeSanner)));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScanPage(codeSanner)));
                                   } else {
+
+
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                         builder: (context) =>
                                             ScanPage(popularBooks[i]["game"])));
                                   }
                                 },
-
                                 child: Container(
-                                height: 500,
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-
-                                    borderRadius: BorderRadius.circular(15),
-                                    image: DecorationImage(
-                                      image: AssetImage(popularBooks[i]["img"]),
-                                      fit: BoxFit.fitWidth,
-                                    )),
-                              ),);
-
+                                  height: 500,
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage(popularBooks[i]["img"]),
+                                        fit: BoxFit.fitWidth,
+                                      )),
+                                ),
+                              );
                             }),
-
-
                       ))
-                ])
-            ),
+                ])),
             SizedBox(
               height: 20,
             ),
@@ -141,14 +171,14 @@ class _MyHomePageState extends State<MyHomePage>
               // height: 100,
               // width: 300,
               //color: Colors.green,
-              child: Center(child: const Text("by mireastick",  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color.fromRGBO(146, 146, 146, 100),
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Avenir"))
-
-              ),
+              child: Center(
+                  child: const Text("by mireastick",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromRGBO(146, 146, 146, 100),
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: "Avenir"))),
             ),
           ],
         ),

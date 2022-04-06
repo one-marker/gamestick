@@ -3,23 +3,58 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui';
 import 'package:flutter/rendering.dart';
 
-class GeneratePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => GeneratePageState();
-}
+// class GeneratePage extends StatelessWidget {
+//   String data;
+//
+//
+//   GeneratePage(String _data) {
+//     data = _data;
+//   }
+//   @override
+//   State<StatefulWidget> createState() => GeneratePageState("afsdf");
+//
+//
+// }
 
-class GeneratePageState extends State<GeneratePage> {
-  String qrData =
-      "https://github.com/neon97";  // already generated qr code when the page opens
+class GeneratePageState extends StatelessWidget {
+  String qrData;  // already generated qr code when the page opens
 
+  GeneratePageState(String _qrData) {
+    qrData= _qrData;
+  }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('QR Code Generator'),
-        actions: <Widget>[],
+
+        leading: IconButton(
+
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                //advancedPlayer.stop();
+              },
+            ),
+
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+
+
+
       ),
       body: Container(
+
         padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,47 +63,10 @@ class GeneratePageState extends State<GeneratePage> {
             QrImage(
               //plce where the QR Image will be shown
               data: qrData,
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
             ),
-            SizedBox(
-              height: 40.0,
-            ),
-            Text(
-              "New QR Link Generator",
-              style: TextStyle(fontSize: 20.0),
-            ),
-            TextField(
-              controller: qrdataFeed,
-              decoration: InputDecoration(
-                hintText: "Input your link or data",
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
-              child: FlatButton(
-                padding: EdgeInsets.all(15.0),
-                onPressed: () async {
 
-                  if (qrdataFeed.text.isEmpty) {        //a little validation for the textfield
-                    setState(() {
-                      qrData = "";
-                    });
-                  } else {
-                    setState(() {
-                      qrData = qrdataFeed.text;
-                    });
-                  }
-
-                },
-                child: Text(
-                  "Generate QR",
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.blue, width: 3.0),
-                    borderRadius: BorderRadius.circular(20.0)),
-              ),
-            )
           ],
         ),
       ),
