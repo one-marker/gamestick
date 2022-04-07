@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gamestick/generate.dart';
+import 'package:gamestick/homePage.dart';
 import 'package:gamestick/scan.dart';
 
 //import 'my_tabs.dart';
@@ -128,27 +129,36 @@ class _MyHomePageState extends State<MyHomePage>
                               },
                                 onTap: () async {
                                   if (i == 0) {
-                                    String codeSanner =
-                                        (await BarcodeScanner.scan(options: new ScanOptions(strings: const {
-                                          "cancel": "Отмена",
-                                          "flash_on": "Вспышка вкл.",
-                                          "flash_off": "Вспышка выкл.",
-                                        })))
-                                            as String; //barcode scnner
-                                    // setState(() {
-                                    //   qrCodeResult = codeSanner;
-                                    // });
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ScanPage(codeSanner)));
+
+                                    await Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const QRViewExample(),
+                                    )).then((value) {
+
+
+                                    });
+
+                                        //             );
+                                    // String codeSanner =
+                                    //     BarcodeScanner.scan()
+                                   //       "cancel": "Отмена",
+                                    //       "flash_on": "Вспышка вкл.",
+                                    //       "flash_off": "Вспышка выкл.",
+                                    //     })))
+                                    //         as String; //barcode scnner
+                                    // // setState(() {
+                                    // //   qrCodeResult = codeSanner;
+                                    // // });
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ScanPage(codeSanner)));
                                   } else {
 
 
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                         builder: (context) =>
-                                            ScanPage(popularBooks[i]["game"])));
+                                            ScanPageState(popularBooks[i]["game"])));
                                   }
                                 },
                                 child: Container(
